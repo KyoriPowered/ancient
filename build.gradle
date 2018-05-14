@@ -26,6 +26,15 @@ license {
 repositories {
   mavenLocal()
   mavenCentral()
+  maven {
+    url 'https://oss.sonatype.org/content/groups/public/'
+  }
+}
+
+dependencies {
+  compile 'com.google.guava:guava:23.6-jre'
+  compile 'org.mongodb:mongo-java-driver:3.7.0'
+  compile 'net.kyori:cereal:1.0.5-SNAPSHOT'
 }
 
 task javadocJar(type: Jar) {
