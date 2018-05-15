@@ -23,8 +23,6 @@
  */
 package net.kyori.ancient.model;
 
-import com.mongodb.client.model.UpdateOptions;
-
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
@@ -38,11 +36,6 @@ import java.lang.annotation.Target;
  * @param <P> the partial model type
  */
 public interface ModelCollection<P extends PartialModel> {
-  /**
-   * Update options with {@code upsert} set to {@code true}.
-   */
-  UpdateOptions UPSERT = new UpdateOptions().upsert(true);
-
   /**
    * An annotation to provide a name for a model collection.
    */

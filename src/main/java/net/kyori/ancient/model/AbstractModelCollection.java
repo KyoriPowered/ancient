@@ -29,6 +29,9 @@ import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 import org.bson.json.JsonWriterSettings;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
+
+import java.util.Optional;
 
 /**
  * An abstract implementation of a model collection.
@@ -56,9 +59,12 @@ public abstract class AbstractModelCollection<P extends PartialModel> implements
    * @param <M> the partial model type
    * @return the partial model
    */
-  protected final <M extends P> M deserialize(final Document document, final Class<M> type) {
+  protected final <M extends P> Optional<M> deserialize(final @Nullable Document document, final Class<M> type) {
+    if(document == null) {
+      return Optional.empty();
+    }
     final String json = document.toJson(JSON_WRITER_SETTINGS);
-    return this.gson().fromJson(json, type);
+    return Optional.of(this.gson().fromJson(json, type));
   }
 
   /**
