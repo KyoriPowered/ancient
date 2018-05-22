@@ -59,12 +59,24 @@ public abstract class AbstractModelCollection<P extends PartialModel> implements
    * @param <M> the partial model type
    * @return the partial model
    */
-  protected final <M extends P> Optional<M> deserialize(final @Nullable Document document, final Class<M> type) {
+  protected final <M extends P> M deserialize(final @NonNull Document document, final Class<M> type) {
+    final String json = document.toJson(JSON_WRITER_SETTINGS);
+    return this.gson().fromJson(json, type);
+  }
+
+  /**
+   * Deserialize a document into a partial model.
+   *
+   * @param document the document
+   * @param type the partial model class
+   * @param <M> the partial model type
+   * @return the partial model
+   */
+  protected final <M extends P> Optional<M> maybeDeserialize(final @Nullable Document document, final Class<M> type) {
     if(document == null) {
       return Optional.empty();
     }
-    final String json = document.toJson(JSON_WRITER_SETTINGS);
-    return Optional.of(this.gson().fromJson(json, type));
+    return Optional.of(this.deserialize(document, type));
   }
 
   /**
