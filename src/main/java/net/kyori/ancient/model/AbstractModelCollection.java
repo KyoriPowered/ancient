@@ -24,6 +24,7 @@
 package net.kyori.ancient.model;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
@@ -86,6 +87,11 @@ public abstract class AbstractModelCollection<P extends PartialModel> implements
    * @return the document
    */
   protected final Document serialize(final P model) {
-    return Document.parse(this.gson().toJson(model));
+    final JsonElement json = this.gson().toJsonTree(model);
+    this.serialized(model, json);
+    return Document.parse(this.gson().toJson(json));
+  }
+
+  protected void serialized(final P model, final JsonElement json) {
   }
 }
